@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Matakuliah; 
 use Illuminate\Http\Request;
-use App\Models\Matakuliah;
 
 class MatakuliahController extends Controller
 {
-        public function create()
-        {
-        return view('matakuliah.create');
-        }
+    // 1. Method index diubah untuk menampilkan daftar mata kuliah dari database
+    public function index()
+    {
+        $matakuliah = Matakuliah::all(); // Mengambil data asli database
+        return view('matakuliah.index', compact('matakuliah'));
+    }
 
-        public function store(Request $request)
-        {
-        Matakuliah::create([
-            'kode_mk' => $request->kode_mk,
-            'nama_mk' => $request->nama_mk,
-            'sks' => $request->sks,
-            'semester' => $request->semester,
-            'dosen_id' => 1
-            ]);
-        return redirect('/matakuliah');
-        }
+    // 2. Method show diubah menggunakan Route Model Binding
+    public function show(Matakuliah $matakuliah)
+    {
+        return view('matakuliah.show', compact('matakuliah'));
+    }
 }

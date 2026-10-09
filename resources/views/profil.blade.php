@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Mahasiswa</title>
+</head>
+<body>
+    <h1>Profil Mahasiswa</h1>
+    <p><strong>Nama:</strong> {{ $nama }}</p>
+    <p><strong>NIM:</strong> {{ $nim }}</p>
+    <p><strong>Program Studi:</strong> {{ $prodi }}</p>
+    <p><strong>Semester:</strong> {{ $semester }}</p>
+</body>
+</html>
