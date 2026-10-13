@@ -15,5 +15,15 @@ class Matakuliah extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function nilai() 
+    { 
+        return $this->hasMany(NilaiMatakuliah::class); 
+    }
+    
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class);
+    }
 }
 

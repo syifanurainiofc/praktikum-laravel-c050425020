@@ -2,21 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Matakuliah; 
+use App\Models\Matakuliah;
 use Illuminate\Http\Request;
 
 class MatakuliahController extends Controller
 {
-    // 1. Method index diubah untuk menampilkan daftar mata kuliah dari database
     public function index()
     {
-        $matakuliah = Matakuliah::all(); // Mengambil data asli database
+        $matakuliah = Matakuliah::all();
         return view('matakuliah.index', compact('matakuliah'));
     }
 
-    // 2. Method show diubah menggunakan Route Model Binding
-    public function show(Matakuliah $matakuliah)
+    public function create()
     {
+        return view('matakuliah.create');
+    }
+
+    public function store(Request $request)
+    {
+        Matakuliah::create($request->only(['kode_mk', 'nama_mk', 'sks', 'semester']));
+        return redirect()->route('matakuliah.index')->with('pesan', 'Data berhasil ditambahkan');
+    }
+
+    public function show(Matakuliah $matakuliah) 
+    {
+        $matakuliah->load('nilai.mahasiswa'); 
         return view('matakuliah.show', compact('matakuliah'));
     }
+
+    public function edit(Matakuliah $matakuliah)
+    {
+        return view('matakuliah.edit', compact('matakuliah'));
+    }
+
+    public function update(Request $request, Matakuliah $matakuliah)
+    {
+        $matakuliah->update($request->only(['kode_mk', 'nama_mk', 'sks', 'semester']));
+        return redirect()->route('matakuliah.index')->with('pesan', 'Data berhasil diperbarui');
+    }
+
+    public function destroy(Matakuliah $matakuliah)
+    {
+        $matakuliah->delete();
+        return redirect()->route('matakuliah.index')->with('pesan', 'Data berhasil dihapus');
+    }
+
 }
+
+
+
+

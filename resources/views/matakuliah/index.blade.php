@@ -13,6 +13,9 @@
 </table>
 
 
+
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -55,3 +58,51 @@
     </table>
 </body>
 </html>
+
+
+
+
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h2>Daftar Mata Kuliah</h2>
+    <a href="{{ route('matakuliah.create') }}" style="background: green; color: white; padding: 5px 10px; text-decoration: none;">+ Tambah MK</a>
+    
+    @if(session('pesan'))
+        <p style="color: green;">{{ session('pesan') }}</p>
+    @endif
+
+    <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; margin-top: 15px;">
+        <thead>
+            <tr>
+                <th>Kode MK</th>
+                <th>Nama Mata Kuliah</th>
+                <th>SKS</th>
+                <th>Semester</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($matakuliah as $mk)
+                <tr>
+                    <td>{{ $mk->kode_mk }}</td>
+                    <td><a href="{{ route('matakuliah.show', $mk->id) }}">{{ $mk->nama_mk }}</a></td>
+                    <td>{{ $mk->sks }}</td>
+                    <td>{{ $mk->semester }}</td>
+                    <td>
+                        <a href="{{ route('matakuliah.edit', $mk->id) }}">Edit</a> | 
+                        <form action="{{ route('matakuliah.destroy', $mk->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Yakin hapus?')">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr><td colspan="5">Belum ada data mata kuliah.</td></tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+@endsection

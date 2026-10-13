@@ -1,16 +1,22 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Detail Mata Kuliah</title>
-</head>
-<body>
-    <h1>Detail Data Mata Kuliah</h1>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h2>Detail Mata Kuliah</h2>
+    <p><strong>Kode:</strong> {{ $matakuliah->kode_mk }}</p>
+    <p><strong>Nama:</strong> {{ $matakuliah->nama_mk }}</p>
+    <p><strong>SKS:</strong> {{ $matakuliah->sks }}</p>
+    <p><strong>Semester:</strong> {{ $matakuliah->semester }}</p>
+
+    <h3>Daftar Mahasiswa yang Mengambil Mata Kuliah Ini:</h3>
     <ul>
-        <li><strong>Kode Mata Kuliah:</strong> {{ $matakuliah->kode }}</li>
-        <li><strong>Nama Mata Kuliah:</strong> {{ $matakuliah->nama_mk }}</li> 
-        <li><strong>Jumlah SKS:</strong> {{ $matakuliah->sks }}</li>
+        @forelse ($matakuliah->nilai as $n)
+            <li>{{ $n->mahasiswa->nim }} - {{ $n->mahasiswa->nama }} (Nilai Angka: {{ $n->nilai }})</li>
+        @empty
+            <li>Belum ada mahasiswa yang mengambil mata kuliah ini.</li>
+        @endforelse
     </ul>
-    <a href="{{ route('akademik.matakuliah.index') }}">&laquo; Kembali ke Daftar</a>
-</body>
-</html>
+
+    <p><a href="{{ route('matakuliah.index') }}"><< Kembali ke Daftar</a></p>
+</div>
+@endsection

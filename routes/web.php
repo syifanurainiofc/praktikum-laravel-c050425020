@@ -5,6 +5,9 @@ use App\Models\Mahasiswa;
 use App\Models\Matakuliah;
 use App\Http\Controllers\MatakuliahController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\StatistikMahasiswaController;
+use App\Http\Controllers\Admin\DashboardController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -90,3 +93,33 @@ Route::get('/mahasiswa/cari-form', function () {
     return view('mahasiswa.cari-form');
 });
 Route::get('/mahasiswa/cari', [MahasiswaController::class, 'cariMahasiswa']);
+
+Route::get('/statistik', StatistikMahasiswaController::class);
+
+Route::get('/admin/dashboard', [DashboardController::class, 'index']);
+
+use App\Http\Controllers\HitungTotalSKSController;
+
+Route::get('/totalsks', HitungTotalSKSController::class);
+
+use App\Http\Controllers\QueryBuilderDemoController;
+
+Route::get('/querybuilderdemo.semua', [QueryBuilderDemoController::class, 'tampilkanSemua']);
+Route::get('/querybuilderdemo.filter', [QueryBuilderDemoController::class, 'tampilkanFilter']);
+
+Route::get('/statistikprodi', [QueryBuilderDemoController::class, 'statistikProdi']);
+
+Route::get('/mahasiswa/tambah', function() {
+    return view('mahasiswa.tambah-mahasiswa');
+});
+
+Route::post('/mahasiswa/tambah', [MahasiswaController::class, 'tambahMahasiswa']);
+
+Route::get('/mahasiswa/uji-update', [MahasiswaController::class, 'prosesUpdate']);
+
+Route::get('/mahasiswa/uji-delete', [MahasiswaController::class, 'prosesDelete']);
+
+
+Route::get('/mahasiswa/paginate', [QueryBuilderDemoController::class, 'tampilkanPaginasi']);
+
+Route::resource('matakuliah', MatakuliahController::class);
